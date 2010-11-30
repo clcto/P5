@@ -4,7 +4,7 @@
       Matrix trans, inv_trans;
 */
 
-Coordinates()
+Coordinates::Coordinates()
 {
    trans.Set(
       0, 0, 0, 0,
@@ -19,7 +19,7 @@ Coordinates()
       0, 0, 0, 1 );
 }
 
-Coordinates( const Point& t, const Vector& s )
+Coordinates::Coordinates( const Point& t, const Vector& s )
 {
    trans.Set(
       s[X],    0,    0, t[X],
@@ -34,22 +34,22 @@ Coordinates( const Point& t, const Vector& s )
            0,      0,      0,     1 );
 }
 
-Vector ToWorld( const Vector& v )
+Vector Coordinates::ToWorld( const Vector& v )
 {
    return trans*v;
 }
 
-Point  ToWorld( const Point& p )
+Point Coordinates::ToWorld( const Point& p )
 {
    return trans*p;
 }
 
-Vector ToObject( const Vector& v )
+Vector Coordinates::ToObject( const Vector& v )
 {
    return inv_trans*v;
 }
 
-Point  ToObject( const Point& p )
+Point Coordinates::ToObject( const Point& p )
 {
    return inv_trans*p;
 }
