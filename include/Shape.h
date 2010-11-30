@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include <cmath>
 
+#include "Coordinates.h"
 #include "Point.h"
 #include "Matrix.h"
 #include "Material.h"
@@ -29,13 +30,7 @@ class Shape
 
    protected: // --------------------------------------
 
-         // transformation matrices
-      Matrix location;
-      Matrix scale;
-
-         // inverse transformation matrices
-      Matrix location_inv;
-      Matrix scale_inv;
+      Coordinates coord;
 
       Material material;
 };

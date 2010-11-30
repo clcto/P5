@@ -1,13 +1,8 @@
 #include "Shape.h"
 
 /* Instance Variables --------------
-Matrix location;
-Matrix scale;
-
-Matrix location_inv;
-Matrix scale_inv;
-
-Material material;
+      Coordinates coord;
+      Material material;
 */
 
 Shape::Shape()
