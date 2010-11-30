@@ -1,0 +1,10 @@
+CS 770, Fall 2010
+Carick Wienke
+Assignment 4: Lighting
+Due 2010.11.05
+
+Description:
+
+ Creates a scene and allows for the user to manage a
+ directional light and a point light, as well as moving
+ the camera
