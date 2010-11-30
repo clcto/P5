@@ -9,8 +9,11 @@ class Sphere : public Shape
       Sphere();
       ~Sphere();
 
-   private:
+      virtual void Intersects( const Ray& );
 
-}
+   private:
+      Point center;
+
+};
 
 #endif

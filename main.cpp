@@ -1,11 +1,13 @@
 #include "Shape.h"
+#include "Sphere.h"
 #include <iostream>
 
 int main( void )
 {
-   Matrix m, a;
-   m.Set( 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4 );
-   a = m;
+   Sphere s;
+   Point p = Point( -1.2, 0, 0 );
+   Vector v = Vector( 1, -.2, -.1 );
+   Ray r = Ray( p, v );
 
-   std::cout << a*m;
+   s.Intersects( r );
 }

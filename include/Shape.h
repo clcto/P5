@@ -7,6 +7,7 @@
 #include "Point.h"
 #include "Matrix.h"
 #include "Material.h"
+#include "Ray.h"
 
 class Shape
 {
@@ -23,6 +24,8 @@ class Shape
 
          // change how the shape reacts to light
       void SetMaterial( const Material& m );
+
+      virtual void Intersects( const Ray& ) = 0;
 
    protected: // --------------------------------------
 
