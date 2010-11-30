@@ -18,11 +18,11 @@ class Shape
       virtual ~Shape();
       
          // SetTransformation
-      void SetTranslation( Point p );
+      void SetTranslation( const Point& p );
       void SetScale( float, float, float ); 
 
          // change how the shape reacts to light
-      void SetMaterial( Material m );
+      void SetMaterial( const Material& m );
 
    protected: // --------------------------------------
 
