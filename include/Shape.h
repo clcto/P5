@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "Point.h"
+#include "Matrix.h"
 #include "Material.h"
 
 class Shape
@@ -24,6 +25,10 @@ class Shape
       void SetMaterial( Material m );
 
    protected: // --------------------------------------
+
+         // transformation matrices
+      Matrix location;
+      Matrix scale;
 
          // inverse transformation matrices
       Matrix location_inv;
