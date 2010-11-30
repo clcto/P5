@@ -165,7 +165,7 @@ public:
                && m[Z] == other[Z]
                && m[W] == other[W];
     }
-    
+
     // Output to stream
     friend ostream& operator<<( ostream& os, const Matrix& matrix )
     {
