@@ -21,8 +21,8 @@ Scene* Scene::Instance()
    //  Constructor
 Scene::Scene() 
 {
-   eye_x = 30;
-   eye_y = 30;
+   eye_x = -20;
+   eye_y = 40;
    eye_z = 30;
 
    ambient.red = 0.4;
@@ -98,7 +98,7 @@ void Scene::Render()
       for( int y = 0; y < WIN_HEIGHT; ++y )
       {
          GLdouble vpX = x;
-         GLdouble vpY = viewport[3] - y;
+         GLdouble vpY = y;
          GLdouble vpZ = 0.0;
 
          GLdouble worldX, worldY, worldZ;
@@ -120,19 +120,25 @@ void Scene::Render()
          pixels[y][x][0] = c.red;
          pixels[y][x][1] = c.green;
          pixels[y][x][2] = c.blue;
-
+#if 0
+         pixels[y][x][0] = 1;
+         pixels[y][x][1] = 1;
+         pixels[y][x][2] = 1;
+#endif
+         
       }
    }
    
    glDrawPixels( WIN_WIDTH, WIN_HEIGHT, 
                  GL_RGB, GL_FLOAT, pixels );
 
+   glutSwapBuffers();
 }
 
 void Scene::Init( int argc, char** argv )
 {
    glutInit( &argc, argv );
-   glutInitDisplayMode( GLUT_RGB );
+   glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    glutInitWindowSize( WIN_WIDTH, WIN_HEIGHT );
    glutCreateWindow( "Ray Tracing - c.wienke" );
 
@@ -193,7 +199,6 @@ Color Scene::Direct( RayHit rh )
    RayHit* lightHit = FindClosest( r );
 
    Color direct = {0,0,0};
-   if( lightHit )
 
    if( lightHit && *lightHit == rh )
    {

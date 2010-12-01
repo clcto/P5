@@ -8,13 +8,15 @@ using std::cout;
 
 RayHit* Cube::Intersects( const Ray& ray )
 {
-   Point start = - coord.ToObject( ray.Start() );
+   Point start = coord.ToObject( ray.Start() );
    Vector start_v = Vector( start );
    start_v[W] = 0;
 
    Vector dir  = coord.ToObject( ray.Direction() );
    double time_scale = 1/dir.Length();
    dir *= time_scale;
+
+   Ray tRay = Ray( start, dir );
 
    Vector n, n_min;
    double t, t_min;
@@ -23,91 +25,49 @@ RayHit* Cube::Intersects( const Ray& ray )
 
    bool hit = false;
 
-      // z = 0 plane d = 0
-   n.Set( 0, 0, -1 );
-   if( n * -dir )
+   for( int i = 0; i < 3; ++i )
    {
-      t = ( n * start_v + 0 )/( n * -dir );
-
-      if( t > 0 && t < t_min )
+      n.Set( 0, 0, 0 );
+      n[i] = -1;
+      if( dir[i] > 0)
       {
-         hit = true;
-         t_min = t;
-         n_min = n;
+         t = -start[i]/dir[i];
+
+         if( t > 0 && t < t_min )
+         {
+            Point p = tRay.At( t );
+            if( -0.005 <= p[X] && p[X] <= 1.005 &&
+                -0.005 <= p[Y] && p[Y] <= 1.005 &&
+                -0.005 <= p[Z] && p[Z] <= 1.005 )
+            {
+               hit = true;
+               t_min = t;
+               n_min = n;
+            }
+         }
+      }
+
+      n[i] = 1;
+      if( -dir[i] > 0 )
+      {
+         t = (1-start[i])/dir[i];
+
+         if( t > 0 && t < t_min )
+         {
+            Point p = tRay.At( t );
+
+            if( -0.005 <= p[X] && p[X] <= 1.005 &&
+                -0.005 <= p[Y] && p[Y] <= 1.005 &&
+                -0.005 <= p[Z] && p[Z] <= 1.005 )
+            {
+               hit = true;
+               t_min = t;
+               n_min = n;
+            }
+         }
       }
    }
 
-      // z = 1 plane d = -1
-   n.Set( 0, 0, 1 );
-   if( n * -dir )
-   {
-      t = ( n * start_v - 1 )/(n * -dir );
-
-      if( t > 0 && t < t_min )
-      {
-         hit = true;
-         t_min = t;
-         n_min = n;
-      }
-   }
-
-      // y = 0 plane d = 0
-   n.Set( 0, -1, 0 );
-   if( n * -dir )
-   {
-      t = ( n * start_v + 0 )/(n * -dir );
-
-      if( t > 0 && t < t_min )
-      {
-         hit = true;
-         t_min = t;
-         n_min = n;
-      }
-   }
-
-      // y = 1 plane d = -1
-   n.Set( 0, 1, 0 );
-   if( n * -dir )
-   {
-      t = ( n * start_v - 1 )/(n * -dir );
-
-      if( t > 0 && t < t_min )
-      {
-         hit = true;
-         t_min = t;
-         n_min = n;
-      }
-   }
-
-      // x = 0 plane d = 0
-   n.Set( -1, 0, 0 );
-   if( n * -dir )
-   {
-      t = ( n * start_v + 0 )/(n * -dir );
-
-      if( t > 0 && t < t_min )
-      {
-         hit = true;
-         t_min = t;
-         n_min = n;
-      }
-   }
-
-      // x = 1 plane d = -1
-   n.Set( 1, 0, 0 );
-   if( n * -dir )
-   {
-      t = ( n * start_v - 1 )/(n * -dir );
-
-      if( t > 0 && t < t_min )
-      {
-         hit = true;
-         t_min = t;
-         n_min = n;
-      }
-   }
-   std::cout << "n_min: " << n_min << "\n";
-   
    
    if( !hit )
       return NULL; 
@@ -120,5 +80,5 @@ RayHit* Cube::Intersects( const Ray& ray )
 
    n = coord.ToWorld( n_min );
 
-   return new RayHit( ray, t * time_scale, n, this );
+   return new RayHit( ray, t_min * time_scale, n, this );
 }
