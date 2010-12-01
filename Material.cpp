@@ -26,6 +26,13 @@ const Material Material::SHINY_GREEN(
                      0.3, 0.6, 0.3,
                      0,   0,   0,
                      20 );
+
+const Material Material::PIANO_BLACK(
+                     0.05, 0.05, 0.05,
+                     0.05, 0.05, 0.05,
+                     0.5, 0.5, 0.5,
+                     0, 0, 0,
+                     40 );
    // -----------------------------------------------------
    // creates the material with the properties given
 Material::Material( float aR, float aG, float aB, 

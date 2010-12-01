@@ -19,6 +19,7 @@ class Scene
       RayHit* FindClosest( const Ray& );
       void Render();
       void Init( int, char** );
+      void Create();
 
       Color Shade( RayHit*, int );
       Color Direct( RayHit );

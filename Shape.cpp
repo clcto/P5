@@ -11,6 +11,11 @@ void Shape::Translate( const Point& p )
    coord.Translate( p );
 }
 
+void Shape::Translate( float x, float y, float z )
+{
+   coord.Translate( Point( x, y, z ) );
+}
+
 void Shape::Scale( float x, float y, float z )
 {
    coord.Scale( x, y, z );

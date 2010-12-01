@@ -25,6 +25,7 @@ class Material
       static const Material SHINY_RED;
       static const Material SHINY_BLUE;
       static const Material SHINY_GREEN;
+      static const Material PIANO_BLACK;
 
    private:
       Color ambient, diffuse, 

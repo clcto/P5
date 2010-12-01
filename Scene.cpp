@@ -5,6 +5,7 @@
 
 #include "Scene.h"
 #include "Sphere.h"
+#include "Cube.h"
 
 Scene* Scene::instance = NULL;
 
@@ -21,7 +22,7 @@ Scene* Scene::Instance()
    //  Constructor
 Scene::Scene() 
 {
-   eye_x = -20;
+   eye_x = 20;
    eye_y = 40;
    eye_z = 30;
 
@@ -80,6 +81,43 @@ void Scene::AddShape( Shape* newShape )
    shapes.push_back( newShape );
 }
 
+void Scene::Create()
+{
+   Sphere* center = new Sphere();
+   center->Scale( 2, 2, 2 );
+   center->SetMaterial( Material::SHINY_RED );
+   AddShape( center );
+
+   Sphere* sph_pos_x = new Sphere();
+   sph_pos_x->Translate( 3.2, 0, -.4 );
+   sph_pos_x->SetMaterial( Material::SHINY_BLUE );
+   AddShape( sph_pos_x );
+
+   Sphere* sph_pos_y = new Sphere();
+   sph_pos_y->Translate( 0, 3, -.5 );
+   sph_pos_y->Scale( .75, .75, .75 );
+   sph_pos_y->SetMaterial( Material::SHINY_GREEN );
+   AddShape( sph_pos_y );
+
+   Cube* bottom = new Cube();
+   bottom->Translate( -5, -5, -5 );
+   bottom->Scale( 10, 10, .2 );
+   bottom->SetMaterial( Material::PIANO_BLACK );
+   AddShape( bottom );
+
+   Cube* back_left = new Cube();
+   back_left->Translate( -5, -5, -5 );
+   back_left->Scale( 10, -0.2, 10 );
+   back_left->SetMaterial( Material::SHINY_GREEN );
+   AddShape( back_left );
+
+   Cube* back_right = new Cube();
+   back_right->Translate( -5, -5, -5 );
+   back_right->Scale( -0.2, 10, 10 );
+   back_right->SetMaterial( Material::SHINY_BLUE );
+   AddShape( back_right );
+}
+
 void Scene::Render()
 {
    GLint viewport[4];
@@ -120,12 +158,6 @@ void Scene::Render()
          pixels[y][x][0] = c.red;
          pixels[y][x][1] = c.green;
          pixels[y][x][2] = c.blue;
-#if 0
-         pixels[y][x][0] = 1;
-         pixels[y][x][1] = 1;
-         pixels[y][x][2] = 1;
-#endif
-         
       }
    }
    
@@ -173,9 +205,18 @@ Color Scene::Shade( RayHit* rh, int depth )
       color.green += ks.green * specRefl.green;
 
       Color direct = Direct( *rh );
-      color.red += direct.red;
-      color.blue += direct.blue;
-      color.green += direct.green;
+      if( !direct.red && !direct.blue && !direct.green )
+      {
+         color.red *= 0.6;
+         color.blue *= 0.6;
+         color.green *= 0.6;
+      }
+      else
+      {
+         color.red += direct.red;
+         color.blue += direct.blue;
+         color.green += direct.green;
+      }
 
       return color;
    }
@@ -242,7 +283,7 @@ Color Scene::SpecularReflection( RayHit rh, int depth )
       Ray tempRay = Ray( reflStart, reflDir );
       
          // move start off of object
-      Ray refl = Ray( tempRay.At( 0.05 ), reflDir );
+      Ray refl = Ray( tempRay.At( 0.1 ), reflDir );
 
       RayHit* reflHit = FindClosest( refl );
       if( reflHit )

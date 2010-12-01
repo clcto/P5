@@ -15,25 +15,7 @@ void draw()
 int main( int argc, char** argv )
 {
 
-
-   Sphere s1, s2;
-   s1.Translate( Point( 3, 0, 0) );
-   s1.Scale( 2, 2, 2 );
-   s1.SetMaterial( Material::SHINY_RED );
-
-   s2.Translate( Point( 2, -2, 2 ) );
-   s2.Scale( 1, 1, 1 );
-   s2.SetMaterial( Material::SHINY_BLUE );
-
-   Cube c1;
-   c1.SetMaterial( Material::SHINY_GREEN );
-   c1.Translate( Point( -2, 1, 1 ) );
-   c1.Scale( 1, 2, 1 );
-
-
-   Scene::Instance()->AddShape( &s1 );
-   Scene::Instance()->AddShape( &s2 );
-   Scene::Instance()->AddShape( &c1 );
+   Scene::Instance()->Create();
 
    Scene::Instance()->Init( argc, argv );
 
