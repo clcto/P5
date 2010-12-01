@@ -20,12 +20,10 @@ Shape::~Shape()
    // SetTransformation
 void Shape::SetTranslation( const Point& p )
 {
-   coord.SetTranslation( p );
 }
 
-void Shape::SetScale( double x, double y, double z )
+void Shape::SetScale( float x, float y, float z )
 {
-   coord.SetScale( x, y, z );
 }
 
    // change how the shape reacts to light
