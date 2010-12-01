@@ -100,20 +100,20 @@ void Scene::Create()
    AddShape( sph_pos_y );
 
    Cube* bottom = new Cube();
-   bottom->Translate( -5, -5, -5 );
-   bottom->Scale( 10, 10, .2 );
+   bottom->Translate( -4, -4, -4 );
+   bottom->Scale( 8, 8, .5 );
    bottom->SetMaterial( Material::PIANO_BLACK );
    AddShape( bottom );
 
    Cube* back_left = new Cube();
-   back_left->Translate( -5, -5, -5 );
-   back_left->Scale( 10, -0.2, 10 );
+   back_left->Translate( -4, -4, -4 );
+   back_left->Scale(8, -0.5, 8 );
    back_left->SetMaterial( Material::SHINY_GREEN );
    AddShape( back_left );
 
    Cube* back_right = new Cube();
-   back_right->Translate( -5, -5, -5 );
-   back_right->Scale( -0.2, 10, 10 );
+   back_right->Translate( -4.48, -4, -4 );
+   back_right->Scale( .5, 8, 8 );
    back_right->SetMaterial( Material::SHINY_BLUE );
    AddShape( back_right );
 }
