@@ -21,7 +21,7 @@ class Shape
       
          // SetTransformation
       void SetTranslation( const Point& p );
-      void SetScale( float, float, float ); 
+      void SetScale( double, double, double ); 
 
          // change how the shape reacts to light
       void SetMaterial( const Material& m );

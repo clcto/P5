@@ -17,6 +17,9 @@ class Coordinates
       Vector ToObject( const Vector& );
       Point  ToObject( const Point& );
 
+      void SetTranslation( const Point& );
+      void SetScale( double, double, double );
+
    private:
       
       Matrix trans, inv_trans;
