@@ -13,17 +13,22 @@ class Material
       Material( float = 0, float = 0, float = 0,
                 float = 0, float = 0, float = 0,
                 float = 0, float = 0, float = 0,
+                float = 0, float = 0, float = 0,
                 float = 0 );
 
-      void GLInit() const;
+      Color ka() const;
+      Color kd() const;
+      Color ks() const;
+      Color kt() const;
+      float exp() const;
 
-         // constant materials that can be used whenever
-      static const Material BRASS,
-                            MATTE_RED,
-                            CHROME,
-                            BLACK_PLASTIC;
-      
+      static const Material SHINY_RED;
+      static const Material SHINY_BLUE;
+      static const Material SHINY_GREEN;
+
    private:
-      Color ambient, diffuse, specular, exponent;
-      float shine;
+      Color ambient, diffuse, 
+            specular_r, specular_t;
+
+      float exponent;
 };

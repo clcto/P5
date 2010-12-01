@@ -8,16 +8,9 @@ using std::cout;
 RayHit* Sphere::Intersects( const Ray& ray )
 {
    Point start = - coord.ToObject( ray.Start() );
-   cout << "ws: " << -ray.Start() << "\n";
-   cout << "os: " << start << "\n";
-
    Vector dir  = coord.ToObject( ray.Direction() );
    double time_scale = 1/dir.Length();
    dir *= time_scale;
-   cout << "wd: " << ray.Direction() << "\n";
-   cout << "od: " << dir << "\n";
-
-
 
       // ( C - R_o ) dot ( C - R_o ) - r^2
       // r = 1, so r^2 = 1
@@ -30,20 +23,14 @@ RayHit* Sphere::Intersects( const Ray& ray )
                 start[Z] * dir[Z];
 
       // check if outside and pointing away
-
    if( c > 0 && t_c < 0 )
-   {
       return NULL;
-   }
 
    double discrim = t_c * t_c - c;
 
       // no intersection
-
    if( discrim < 0 )
-   {
       return NULL;
-   }
    
    double h = sqrt( discrim );
 
@@ -63,5 +50,5 @@ RayHit* Sphere::Intersects( const Ray& ray )
 
    n = coord.ToWorld( n );
 
-   return new RayHit( t * time_scale, n );
+   return new RayHit( ray, t * time_scale, n, this );
 }

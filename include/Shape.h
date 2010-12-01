@@ -11,6 +11,8 @@
 #include "Ray.h"
 #include "RayHit.h"
 
+class RayHit;
+
 class Shape
 {
 
@@ -22,6 +24,8 @@ class Shape
 
          // change how the shape reacts to light
       void SetMaterial( const Material& m );
+
+      Material GetMaterial() const;
 
       virtual RayHit* Intersects( const Ray& ) = 0;
 

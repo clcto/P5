@@ -1,16 +1,37 @@
 #include "Shape.h"
 #include "Sphere.h"
+#include "Scene.h"
+#include "RayHit.h"
+
 #include <iostream>
 
-int main( void )
-{
-   Sphere s;
-   s.Translate( Point( 0, 0, 0) );
-   s.Scale( 3, 2, 1 );
-   Point p = Point( -10, 10, 0 );
-   Vector v = Vector( 1, -1, 0 );
-   Ray r = Ray( p, v );
 
-   s.Intersects( r );
+void draw()
+{
+   Scene::Instance()->Render();
+}
+
+int main( int argc, char** argv )
+{
+
+
+   Sphere s1, s2;
+   s1.Translate( Point( 3, 0, -2) );
+   s1.Scale( 2, 2, 2 );
+   s1.SetMaterial( Material::SHINY_RED );
+
+   s2.Translate( Point( 0, 0, 0 ) );
+   s2.Scale( 1, 1, 1 );
+   s2.SetMaterial( Material::SHINY_BLUE );
+
+
+   Scene::Instance()->AddShape( &s1 );
+   Scene::Instance()->AddShape( &s2 );
+
+   Scene::Instance()->Init( argc, argv );
+
+   glutDisplayFunc( draw );
+
+   glutMainLoop();
 }
 

@@ -6,33 +6,32 @@
 
 #include "Material.h"
 
-// Define some constants that will be used
+const Material Material::SHINY_RED(
+                     0.5, 0.2, 0.2,
+                     0.8, 0.1, 0.1,
+                     0.6, 0.3, 0.3,
+                     0,   0,   0,
+                     20 );
 
-const Material Material::BRASS(
-         0.3294, 0.2235, 0.02745,
-         0.7804, 0.5686, 0.1137,
-         0.9, .9, .9, 128 );
+const Material Material::SHINY_BLUE(
+                     0.2, 0.2, 0.5,
+                     0.1, 0.1, 0.8,
+                     0.3, 0.3, 0.6,
+                     0,   0,   0,
+                     20 );
 
-const Material Material::MATTE_RED(
-         0.25, 0.0, 0.0,
-         0.6, 0.1, 0.1,
-         0.2, 0.2, 0.2, 3 );
-
-const Material Material::CHROME(
-         0.23125, 0.23125, 0.23125,
-         0.5775, 0.5775, 0.5775,
-         0.9339, 0.9339, 0.9339, 110 );
-
-const Material Material::BLACK_PLASTIC(
-         0, 0, 0,
-         0.2, 0.2, 0.2,
-         0.2, 0.2, 0.2, 32 );
-
+const Material Material::SHINY_GREEN(
+                     0.2, 0.5, 0.2,
+                     0.1, 0.8, 0.1,
+                     0.3, 0.6, 0.3,
+                     0,   0,   0,
+                     20 );
    // -----------------------------------------------------
    // creates the material with the properties given
 Material::Material( float aR, float aG, float aB, 
                     float dR, float dG, float dB,
-                    float sR, float sG, float sB,
+                    float srR, float srG, float srB,
+                    float stR, float stG, float stB,
                     float exp )
 {
    ambient.red = aR;
@@ -43,34 +42,38 @@ Material::Material( float aR, float aG, float aB,
    diffuse.green = dG;
    diffuse.blue = dB;
 
-   specular.red = sR;
-   specular.green = sG;
-   specular.blue = sB;
+   specular_r.red = srR;
+   specular_r.green = srG;
+   specular_r.blue = srB;
 
-   shine = exp;
+   specular_t.red = stR;
+   specular_t.green = stG;
+   specular_t.blue = stB;
+
+   exponent = exp;
 }
 
-   // -----------------------------------------------------
-   // cause the GL methods to initialize the material
-void Material::GLInit() const
+Color Material::ka() const
 {
-   float param[4];
-   param[3] = 1;
-   
-   param[0] = ambient.red; 
-   param[1] = ambient.green; 
-   param[2] = ambient.blue; 
-   glMaterialfv( GL_FRONT, GL_AMBIENT, param );
+   return ambient;
+}
 
-   param[0] = diffuse.red; 
-   param[1] = diffuse.green; 
-   param[2] = diffuse.blue; 
-   glMaterialfv( GL_FRONT, GL_DIFFUSE, param );
+Color Material::kd() const
+{
+   return diffuse;
+}
 
-   param[0] = specular.red; 
-   param[1] = specular.green; 
-   param[2] = specular.blue; 
-   glMaterialfv( GL_FRONT, GL_SPECULAR, param );
+Color Material::ks() const
+{
+   return specular_r;
+}
 
-   glMaterialf( GL_FRONT, GL_SHININESS, shine );
+Color Material::kt() const
+{
+   return specular_t;
+}
+
+float Material::exp() const
+{
+   return exponent;
 }

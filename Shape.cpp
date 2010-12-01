@@ -21,3 +21,8 @@ void Shape::SetMaterial( const Material& m )
 {
    material = m;
 }
+
+Material Shape::GetMaterial() const
+{
+   return material;
+}
