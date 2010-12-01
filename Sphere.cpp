@@ -15,8 +15,10 @@ Sphere::~Sphere()
 
 void Sphere::Intersects( const Ray& ray )
 {
-   Point start = -ray.Start();
-   Vector dir   = ray.Direction();
+   cout << -ray.Start() << "\n";
+   Point start = - coord.ToObject( ray.Start() );
+   cout << start << "\n";
+   Vector dir  = coord.ToObject( ray.Direction() ).Normalize();
 
       // ( C - R_o ) dot ( C - R_o ) - r^2
       // r = 1, so r^2 = 1
@@ -29,7 +31,6 @@ void Sphere::Intersects( const Ray& ray )
                 start[Z] * dir[Z];
 
       // check if outside and pointing away
-   cout << "c = " << c << " t_c = " << t_c << "\n";
 
    if( c > 0 && t_c < 0 )
    {
@@ -39,11 +40,9 @@ void Sphere::Intersects( const Ray& ray )
    double discrim = t_c * t_c - c;
 
       // no intersection
-   cout << "disc = " << discrim << "\n";
 
    if( discrim < 0 )
    {
-      cout << "disc = " << discrim << "\n";
       return;
    }
    
@@ -59,8 +58,14 @@ void Sphere::Intersects( const Ray& ray )
    else
       t = t_c + h;
 
-   Point p = ray.At( t );
+   Point p = Point( -start[X] + t*dir[X],
+                    -start[Y] + t*dir[Y],
+                    -start[Z] + t*dir[Z] );
+
+   Point p2 = coord.ToWorld( p );
+
+   Point p3 = ray.At( t );
    
 
-   cout << "time = " << t << "\n" << p << "\n";;
+   cout << "time = " << t << "\n" << p << "\n" << p2 << '\n' << p3 << '\n';
 }

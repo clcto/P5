@@ -7,31 +7,40 @@
 Coordinates::Coordinates()
 {
    trans.Set(
-      0, 0, 0, 0,
-      0, 0, 0, 0,
-      0, 0, 0, 0,
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
       0, 0, 0, 1 );
 
    inv_trans.Set(
-      0, 0, 0, 0,
-      0, 0, 0, 0,
-      0, 0, 0, 0,
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
       0, 0, 0, 1 );
 }
 
-Coordinates::Coordinates( const Point& t, const Vector& s )
+void Coordinates::Scale( double x, double y, double z )
 {
-   trans.Set(
-      s[X],    0,    0, t[X],
-         0, s[Y],    0, t[Y],
-         0,    0, s[Z], t[Z],
-         0,    0,    0,    1 );
+   trans = trans * Matrix( x, 0, 0, 0,
+                           0, y, 0, 0,
+                           0, 0, z, 0,
+                           0, 0, 0, 1 );
+   inv_trans = Matrix( 1/x, 0, 0, 0,
+                       0, 1/y, 0, 0,
+                       0, 0, 1/z, 0,
+                       0, 0, 0, 1 ) * inv_trans;
+}
 
-   inv_trans.Set(
-      1/s[X],      0,      0, -t[X],
-           0, 1/s[Y],      0, -t[Y],
-           0,      0, 1/s[Z], -t[Z],
-           0,      0,      0,     1 );
+void Coordinates::Translate( const Point& p )
+{
+   trans = trans * Matrix( 1, 0, 0, p[X],
+                           0, 1, 0, p[Y],
+                           0, 0, 1, p[Z],
+                           0, 0, 0,    1 );
+   inv_trans = Matrix( 1, 0, 0, -p[X],
+                       0, 1, 0, -p[Y],
+                       0, 0, 1, -p[Z],
+                       0, 0, 0,    1 ) * inv_trans;
 }
 
 Vector Coordinates::ToWorld( const Vector& v )

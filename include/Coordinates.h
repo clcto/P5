@@ -9,13 +9,15 @@ class Coordinates
 {
    public:
       Coordinates();
-      Coordinates( const Point&, const Vector& );
 
       Vector ToWorld( const Vector& );
       Point  ToWorld( const Point& );
 
       Vector ToObject( const Vector& );
       Point  ToObject( const Point& );
+
+      void Scale( double, double, double );
+      void Translate( const Point& );
 
    private:
       

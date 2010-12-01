@@ -20,8 +20,8 @@ class Shape
       virtual ~Shape();
       
          // SetTransformation
-      void SetTranslation( const Point& p );
-      void SetScale( float, float, float ); 
+      void Translate( const Point& p );
+      void Scale( float, float, float ); 
 
          // change how the shape reacts to light
       void SetMaterial( const Material& m );

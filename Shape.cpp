@@ -7,9 +7,6 @@
 
 Shape::Shape()
 {
-   Point p = Point( 0, 0, 0 );
-   SetTranslation( p );
-   SetScale( 1, 1, 1 );
 }
 
 Shape::~Shape()
@@ -18,12 +15,14 @@ Shape::~Shape()
 }
 
    // SetTransformation
-void Shape::SetTranslation( const Point& p )
+void Shape::Translate( const Point& p )
 {
+   coord.Translate( p );
 }
 
-void Shape::SetScale( float x, float y, float z )
+void Shape::Scale( float x, float y, float z )
 {
+   coord.Scale( x, y, z );
 }
 
    // change how the shape reacts to light

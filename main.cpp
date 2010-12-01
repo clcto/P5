@@ -5,8 +5,12 @@
 int main( void )
 {
    Sphere s;
-   Point p = Point( -1.2, 0, 0 );
-   Vector v = Vector( 1, -.2, -.1 );
+   /*
+   s.Translate( Point( 0, 0, 0) );
+   s.Scale( 1, 1, 1 );
+   */
+   Point p = Point( -10, .5, 0 );
+   Vector v = Vector( -1, 0, 0 );
    Ray r = Ray( p, v );
 
    s.Intersects( r );
