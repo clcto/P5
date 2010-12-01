@@ -6,14 +6,9 @@
 class Sphere : public Shape
 {
    public:
-      Sphere();
-      ~Sphere();
-
-      virtual void Intersects( const Ray& );
+      virtual RayHit* Intersects( const Ray& );
 
    private:
-      Point center;
-
 };
 
 #endif

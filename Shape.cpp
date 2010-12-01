@@ -5,15 +5,6 @@
       Material material;
 */
 
-Shape::Shape()
-{
-}
-
-Shape::~Shape()
-{
-
-}
-
    // SetTransformation
 void Shape::Translate( const Point& p )
 {

@@ -1,19 +1,11 @@
 #include "Sphere.h"
+
 #include <cmath>
 #include <iostream>
 
 using std::cout;
 
-Sphere::Sphere()
-{
-}
-
-Sphere::~Sphere()
-{
-
-}
-
-void Sphere::Intersects( const Ray& ray )
+RayHit* Sphere::Intersects( const Ray& ray )
 {
    Point start = - coord.ToObject( ray.Start() );
    cout << "ws: " << -ray.Start() << "\n";
@@ -41,7 +33,7 @@ void Sphere::Intersects( const Ray& ray )
 
    if( c > 0 && t_c < 0 )
    {
-      return;
+      return NULL;
    }
 
    double discrim = t_c * t_c - c;
@@ -50,7 +42,7 @@ void Sphere::Intersects( const Ray& ray )
 
    if( discrim < 0 )
    {
-      return;
+      return NULL;
    }
    
    double h = sqrt( discrim );
@@ -65,14 +57,11 @@ void Sphere::Intersects( const Ray& ray )
    else
       t = t_c + h;
 
-   Point p = Point( -start[X] + t*dir[X],
-                    -start[Y] + t*dir[Y],
-                    -start[Z] + t*dir[Z] );
+   Vector n = Vector( -start[X] + t*dir[X],
+                      -start[Y] + t*dir[Y],
+                      -start[Z] + t*dir[Z] );
 
-   Point p2 = coord.ToWorld( p );
+   n = coord.ToWorld( n );
 
-   Point p3 = ray.At( t*time_scale );
-   
-
-   cout << "time = " << t << "\n" << p << "\n" << p2 << '\n' << p3 << '\n';
+   return new RayHit( t * time_scale, n );
 }

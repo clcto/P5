@@ -9,16 +9,13 @@
 #include "Matrix.h"
 #include "Material.h"
 #include "Ray.h"
+#include "RayHit.h"
 
 class Shape
 {
 
    public: //------------------------------------------
 
-      Shape();
-
-      virtual ~Shape();
-      
          // SetTransformation
       void Translate( const Point& p );
       void Scale( float, float, float ); 
@@ -26,7 +23,7 @@ class Shape
          // change how the shape reacts to light
       void SetMaterial( const Material& m );
 
-      virtual void Intersects( const Ray& ) = 0;
+      virtual RayHit* Intersects( const Ray& ) = 0;
 
    protected: // --------------------------------------
 
