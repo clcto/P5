@@ -15,10 +15,17 @@ Sphere::~Sphere()
 
 void Sphere::Intersects( const Ray& ray )
 {
-   cout << -ray.Start() << "\n";
    Point start = - coord.ToObject( ray.Start() );
-   cout << start << "\n";
-   Vector dir  = coord.ToObject( ray.Direction() ).Normalize();
+   cout << "ws: " << -ray.Start() << "\n";
+   cout << "os: " << start << "\n";
+
+   Vector dir  = coord.ToObject( ray.Direction() );
+   double time_scale = 1/dir.Length();
+   dir *= time_scale;
+   cout << "wd: " << ray.Direction() << "\n";
+   cout << "od: " << dir << "\n";
+
+
 
       // ( C - R_o ) dot ( C - R_o ) - r^2
       // r = 1, so r^2 = 1
@@ -64,7 +71,7 @@ void Sphere::Intersects( const Ray& ray )
 
    Point p2 = coord.ToWorld( p );
 
-   Point p3 = ray.At( t );
+   Point p3 = ray.At( t*time_scale );
    
 
    cout << "time = " << t << "\n" << p << "\n" << p2 << '\n' << p3 << '\n';
