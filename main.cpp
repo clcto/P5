@@ -10,11 +10,13 @@
 using std::vector;
 using std::cout;
 
+   // draw the scene
 void draw()
 {
    Scene::Instance()->Render();
 }
 
+   // test intesections
 void test()
 {
    cout << "Format:\n[Start Point]\n[Direction Vector]\n"
@@ -109,7 +111,7 @@ void test()
    }
 }
 
-
+   // run the program
 int main( int argc, char** argv )
 {
    if( argc > 1 && !strcmp( argv[1], "-test" ) )

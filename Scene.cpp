@@ -1,3 +1,13 @@
+// --------------------------------------------------------
+// Scene
+//    holds the information about the scene.
+//
+//    what shapes are in the scene, what light
+//    is there, and allows to "ray trace" the scene
+//
+// Carick Wienke
+// --------------------------------------------------------
+
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -34,10 +44,6 @@ Scene::Scene()
    light.position[1] = 30;
    light.position[2] = 30;
 
-   light.ambient.red = .1;
-   light.ambient.blue = .1;
-   light.ambient.green = .1;
-
    light.diffuse.red = 1;
    light.diffuse.blue = 1;
    light.diffuse.green = 1;
@@ -56,6 +62,7 @@ Scene::~Scene()
    }
 }
 
+   // find the closest hit for the ray passed
 RayHit* Scene::FindClosest( const Ray& r )
 {
    RayHit *closest = NULL;
@@ -81,6 +88,7 @@ void Scene::AddShape( Shape* newShape )
    shapes.push_back( newShape );
 }
 
+   // create a default scene
 void Scene::Create()
 {
    Sphere* center = new Sphere();
@@ -118,6 +126,7 @@ void Scene::Create()
    AddShape( back_right );
 }
 
+   // perform the ray tracing
 void Scene::Render()
 {
    GLint viewport[4];
@@ -167,6 +176,7 @@ void Scene::Render()
    glutSwapBuffers();
 }
 
+   // init the GLUT Widnow
 void Scene::Init( int argc, char** argv )
 {
    glutInit( &argc, argv );
@@ -186,6 +196,7 @@ void Scene::Init( int argc, char** argv )
 
 } 
 
+   // gets the color at the point the ray hit
 Color Scene::Shade( RayHit* rh, int depth )
 {
    if( rh )
@@ -227,6 +238,7 @@ Color Scene::Shade( RayHit* rh, int depth )
    }
 }
 
+   // gets the color based on direct light
 Color Scene::Direct( RayHit rh )
 {
    Point p = Point( light.position[0],
@@ -270,6 +282,7 @@ Color Scene::Direct( RayHit rh )
    return direct;
 }
 
+   // gets the color based on the reflection
 Color Scene::SpecularReflection( RayHit rh, int depth )
 {
    if( depth > 0 )

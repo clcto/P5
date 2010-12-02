@@ -1,3 +1,10 @@
+// --------------------------------------------------------
+// Cube
+//    a shape that represents a cube (or rectangular prism)
+//
+// Carick Wienke
+// --------------------------------------------------------
+
 #include "Cube.h"
 
 #include <cmath>
@@ -6,6 +13,7 @@
 
 using std::cout;
 
+   // where does the ray hit the cube
 RayHit* Cube::Intersects( const Ray& ray )
 {
    Point start = coord.ToObject( ray.Start() );

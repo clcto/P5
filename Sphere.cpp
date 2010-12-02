@@ -1,3 +1,10 @@
+// --------------------------------------------------------
+// Sphere
+//    A sphere for ray tracing
+//
+// Carick Wienke
+// --------------------------------------------------------
+
 #include "Sphere.h"
 
 #include <cmath>
@@ -5,6 +12,7 @@
 
 using std::cout;
 
+   // get where the World Coord ray hits the sphere
 RayHit* Sphere::Intersects( const Ray& ray )
 {
    Point start = - coord.ToObject( ray.Start() );

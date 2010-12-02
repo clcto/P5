@@ -1,9 +1,15 @@
+// --------------------------------------------------------
+// Coordinates
+//    class that represents a coordinate system
+//    (for an object). It allows for transforming
+//    between the world and object coordinates
+//
+// Carick Wienke
+// --------------------------------------------------------
+
 #include "Coordinates.h"
 
-/* Instance Variables -------
-      Matrix trans, inv_trans;
-*/
-
+   // create coordinates with no translate or scale
 Coordinates::Coordinates()
 {
    trans.Set(
@@ -19,6 +25,7 @@ Coordinates::Coordinates()
       0, 0, 0, 1 );
 }
 
+   // scale the system by the parameters passed
 void Coordinates::Scale( double x, double y, double z )
 {
    trans = trans * Matrix( x, 0, 0, 0,
@@ -31,6 +38,7 @@ void Coordinates::Scale( double x, double y, double z )
                        0, 0, 0, 1 ) * inv_trans;
 }
 
+   // translate the coordinates
 void Coordinates::Translate( const Point& p )
 {
    trans = trans * Matrix( 1, 0, 0, p[X],
@@ -43,21 +51,25 @@ void Coordinates::Translate( const Point& p )
                        0, 0, 0,    1 ) * inv_trans;
 }
 
+   // converts the vector to world coordinate
 Vector Coordinates::ToWorld( const Vector& v )
 {
    return trans*v;
 }
 
+   // converts the point to world coordinates
 Point Coordinates::ToWorld( const Point& p )
 {
    return trans*p;
 }
 
+   // coverts the vector to object coordinates
 Vector Coordinates::ToObject( const Vector& v )
 {
    return inv_trans*v;
 }
 
+   // coverts the point to object coordinates
 Point Coordinates::ToObject( const Point& p )
 {
    return inv_trans*p;

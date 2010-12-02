@@ -60,6 +60,8 @@ Material::Material( float aR, float aG, float aB,
    exponent = exp;
 }
 
+// Accessors to return material properties
+
 Color Material::ka() const
 {
    return ambient;
