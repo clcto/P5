@@ -208,8 +208,8 @@ Color Scene::Shade( RayHit* rh, int depth )
       if( !direct.red && !direct.blue && !direct.green )
       {
          color.red *= 0.6;
-         color.blue *= 0.6;
          color.green *= 0.6;
+         color.blue *= 0.6;
       }
       else
       {
