@@ -1,3 +1,11 @@
+// --------------------------------------------------------
+// Ray
+//    a ray of light that has a start location and a
+//    unit vector direction
+//
+// Carick Wienke
+// --------------------------------------------------------
+
 #ifndef RAY_H_
 #define RAY_H_
 
@@ -10,6 +18,7 @@ class Ray
       Ray();
       Ray( const Point&, const Vector& );
 
+         // access the start point and direction
       const Point& Start() const;
       const Vector& Direction() const;
 
