@@ -33,6 +33,13 @@ const Material Material::PIANO_BLACK(
                      0.5, 0.5, 0.5,
                      0, 0, 0,
                      40 );
+
+const Material Material::TRANS_YELLOW(
+                     0.4, 0.4, 0.1,
+                     0.6, 0.6, 0.2,
+                     0.3, 0.3, 0.05,
+                     0.8, 0.8, 0.2,
+                     20 );
    // -----------------------------------------------------
    // creates the material with the properties given
 Material::Material( float aR, float aG, float aB, 

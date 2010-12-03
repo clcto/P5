@@ -55,6 +55,9 @@ class Scene
          // gets the color based on the reflection
       Color SpecularReflection( RayHit, int );
 
+         // gets the color based on the transmission
+      Color SpecularTransmission( RayHit, int );
+
          // holds the shapes on the screen
       vector<Shape*> shapes;
       

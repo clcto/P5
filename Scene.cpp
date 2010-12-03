@@ -124,6 +124,18 @@ void Scene::Create()
    back_right->Scale( .5, 8, 8 );
    back_right->SetMaterial( Material::SHINY_BLUE );
    AddShape( back_right );
+
+   Cube* trans = new Cube();
+   trans->Translate( 4, 3, 4 );
+   trans->Scale( 2, 2, 2 );
+   trans->SetMaterial( Material::TRANS_YELLOW );
+   AddShape( trans );
+
+   Sphere* trans_sph = new Sphere();
+   trans_sph->Translate( 2, 5, 2 );
+   trans_sph->Scale( 1.5, 1, 0.75 );
+   trans_sph->SetMaterial( Material::TRANS_YELLOW );
+   AddShape( trans_sph );
 }
 
    // perform the ray tracing
@@ -186,7 +198,7 @@ void Scene::Init( int argc, char** argv )
 
    glMatrixMode( GL_PROJECTION );
    glLoadIdentity();
-   gluPerspective( 10, (double)WIN_WIDTH/WIN_HEIGHT, 
+   gluPerspective( 15, (double)WIN_WIDTH/WIN_HEIGHT, 
                    5, 100 );
 
    glMatrixMode( GL_MODELVIEW );
@@ -209,11 +221,23 @@ Color Scene::Shade( RayHit* rh, int depth )
       color.blue += ka.blue * ambient.blue;
       color.green += ka.green * ambient.green;
 
-      Color specRefl = SpecularReflection( *rh, depth );
       Color ks = rh->Face()->GetMaterial().ks();
-      color.red += ks.red * specRefl.red;
-      color.blue += ks.blue * specRefl.blue;
-      color.green += ks.green * specRefl.green;
+      if( ks.red || ks.blue || ks.green )
+      {
+         Color specRefl = SpecularReflection( *rh, depth );
+         color.red += ks.red * specRefl.red;
+         color.blue += ks.blue * specRefl.blue;
+         color.green += ks.green * specRefl.green;
+      }
+
+      Color kt = rh->Face()->GetMaterial().kt();
+      if( kt.red || kt.blue || kt.green )
+      {
+         Color specTrans = SpecularTransmission( *rh, depth );
+         color.red += kt.red * specTrans.red;
+         color.blue += kt.blue * specTrans.blue;
+         color.green += kt.green * specTrans.green;
+      }
 
       Color direct = Direct( *rh );
       if( !direct.red && !direct.blue && !direct.green )
@@ -299,6 +323,36 @@ Color Scene::SpecularReflection( RayHit rh, int depth )
       Ray refl = Ray( tempRay.At( 0.1 ), reflDir );
 
       RayHit* reflHit = FindClosest( refl );
+      if( reflHit )
+         return Shade( reflHit, depth - 1 );
+   }
+
+   Color c = {0,0,0};
+   return c;
+
+}
+
+   // gets the color based on the transmission
+Color Scene::SpecularTransmission( RayHit rh, int depth )
+{
+   if( depth > 0 )
+   {
+      Point reflStart = rh.HitPoint();
+      Vector reflDir = 
+         rh.InRay().Direction() + 0.2 * (
+         rh.InRay().Direction() -
+         (rh.InRay().Direction() * rh.Normal()) *
+         rh.Normal());
+
+      Ray tempRay = Ray( reflStart, reflDir );
+      
+         // move start off of object
+      Ray refl = Ray( tempRay.At( 0.1 ), reflDir );
+
+      RayHit* reflHit = FindClosest( refl );
+      if( reflHit && reflHit->Face() == rh.Face() )
+         reflHit = FindClosest( refl );
+
       if( reflHit )
          return Shade( reflHit, depth - 1 );
    }
